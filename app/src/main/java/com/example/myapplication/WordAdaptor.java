@@ -52,17 +52,17 @@ public class WordAdaptor extends ArrayAdapter<Word> implements AdapterView.OnIte
         TextView miwokTextView = listItemView.findViewById(R.id.miwok_text_view);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        miwokTextView.setText(currentWord.getmMiwokTranslation());
+        miwokTextView.setText(currentWord.getMiwokTranslation());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.default_translation_text_view);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        defaultTextView.setText(currentWord.getmDefaultTranslation());
+        defaultTextView.setText(currentWord.getDefaultTranslation());
 
         ImageView imageView = listItemView.findViewById(R.id.image);
         if (currentWord.hasImage()) {
-            imageView.setImageResource(currentWord.getmImageResourceId());
+            imageView.setImageResource(currentWord.getImageResourceId());
             imageView.setVisibility(View.VISIBLE);
         } else {
             imageView.setVisibility(View.GONE);

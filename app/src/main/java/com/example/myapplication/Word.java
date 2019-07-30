@@ -16,15 +16,15 @@ public class Word {
         mAudioResourcedId = audioResourcedId;
     }
 
-    int getmImageResourceId() {
+    int getImageResourceId() {
         return mImageResourceId;
     }
 
-    String getmDefaultTranslation() {
+    String getDefaultTranslation() {
         return mDefaultTranslation;
     }
 
-    String getmMiwokTranslation() {
+    String getMiwokTranslation() {
         return mMiwokTranslation;
     }
 
