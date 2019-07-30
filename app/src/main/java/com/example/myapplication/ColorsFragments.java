@@ -1,19 +1,29 @@
 package com.example.myapplication;
 
+
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ColorsFragments extends Fragment {
 
-public class ColorsActivity extends AppCompatActivity {
+    WordAdaptor mAdapter;
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
-
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.word_list, container, false);
 
         final ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("red", "wetetti", R.drawable.color_red, R.raw.color_red));
@@ -26,12 +36,19 @@ public class ColorsActivity extends AppCompatActivity {
         words.add(new Word("white", "kelelli", R.drawable.color_white, R.raw.color_white));
 
 
-        WordAdaptor adapter = new WordAdaptor(this, words, R.color.category_colors);
+        mAdapter = new WordAdaptor(getContext(), words, R.color.category_colors);
 
-        ListView listView = findViewById(R.id.list);
+        ListView listView = view.findViewById(R.id.list);
 
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(adapter);
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(mAdapter);
+
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter.stopMusic();
     }
 }
-

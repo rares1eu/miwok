@@ -1,17 +1,28 @@
 package com.example.myapplication;
 
+
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PhrasesActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PhrasesFragments extends Fragment {
 
+    WordAdaptor mAdapter;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.word_list, container, false);
 
         final ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("Whereare you going?", "minto wuksus", Word.NO_IMAGE_PROVIDE, R.raw.phrase_where_are_you_going));
@@ -25,11 +36,19 @@ public class PhrasesActivity extends AppCompatActivity {
         words.add(new Word("Let's go.", "dasdsfs", Word.NO_IMAGE_PROVIDE, R.raw.phrase_lets_go));
         words.add(new Word("Come here.", "sdasfgfd", Word.NO_IMAGE_PROVIDE, R.raw.phrase_come_here));
 
-        WordAdaptor adapter = new WordAdaptor(this, words, R.color.category_phrases);
+        mAdapter = new WordAdaptor(getContext(), words, R.color.category_phrases);
 
-        ListView listView = findViewById(R.id.list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(adapter);
+        ListView listView = view.findViewById(R.id.list);
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(mAdapter);
+
+        return view;
     }
-}
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter.stopMusic();
+    }
+
+}

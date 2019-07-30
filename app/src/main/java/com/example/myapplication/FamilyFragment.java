@@ -1,18 +1,28 @@
 package com.example.myapplication;
 
+
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class FamilyActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FamilyFragment extends Fragment {
 
+    WordAdaptor mAdapter;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
-
+    public View onCreateView(@Nullable LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
+        final View view=inflater.inflate(R.layout.word_list,container,false);
 
         final ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("father", "әpә", R.drawable.family_father, R.raw.family_father));
@@ -27,14 +37,20 @@ public class FamilyActivity extends AppCompatActivity {
         words.add(new Word("grandfather", "paapa", R.drawable.family_grandfather, R.raw.family_grandfather));
 
 
-        WordAdaptor adapter = new WordAdaptor(this, words, R.color.category_family);
+        mAdapter = new WordAdaptor(getContext(), words, R.color.category_family);
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = view.findViewById(R.id.list);
 
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(adapter);
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(mAdapter);
+
+
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter.stopMusic();
     }
 }
-
-
-

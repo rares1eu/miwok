@@ -1,23 +1,27 @@
 package com.example.myapplication;
 
+
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 
-public class NumbersActivity extends AppCompatActivity {
+public class NumbersFragment extends Fragment {
     WordAdaptor mAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.word_list, container, false);
 
         final ArrayList<Word> words = new ArrayList<>();
-
         words.add(new Word("one", "lutti", R.drawable.number_one, R.raw.number_one));
         words.add(new Word("two", "otikko", R.drawable.number_two, R.raw.number_two));
         words.add(new Word("three", "tolookosu", R.drawable.number_three, R.raw.number_three));
@@ -29,18 +33,18 @@ public class NumbersActivity extends AppCompatActivity {
         words.add(new Word("nine", "wo'e", R.drawable.number_nine, R.raw.number_nine));
         words.add(new Word("ten", "na'aacha", R.drawable.number_ten, R.raw.number_ten));
 
+        mAdapter = new WordAdaptor(getContext(), words, R.color.category_numbers);
 
-        mAdapter = new WordAdaptor(this, words, R.color.category_numbers);
-
-        ListView listView = findViewById(R.id.list);
+        ListView listView = view.findViewById(R.id.list);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mAdapter);
+
+        return view;
     }
 
-
     @Override
-    protected void onStop() {
-        super.onStop();
+    public void onDestroyView() {
+        super.onDestroyView();
         mAdapter.stopMusic();
     }
 }
